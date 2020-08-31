@@ -26,10 +26,10 @@ const columns = [
     title: "Action",
     dataIndex: "",
     key: "x",
-    render: () => <a onClick={() => handleDelete()}>Delete</a>,
+    render: () => <a href="/" onClick={() => handleDelete()}>Delete</a>,
   },
 ];
-const data = [
+let fakeData = [
   {
     key: "1",
     title: "Umyť auto",
@@ -47,11 +47,40 @@ const data = [
     title: "Upiecť koláč",
   },
 ];
+let local = '';
 
 export default function MyTable() {
+  
+  const localData = () => {
+    let request = {
+      headers: {
+        'Content-Type': 'application/json'
+        // Authorization: 'Bearer ' + GlobalStore.token //Zatial do storu token...
+      },
+      // body: JSON.stringify(data),
+      credentials: 'include',
+      method: 'GET',
+      mode: 'no-cors',
+      // body: JSON.stringify(req)
+    }
+  
+    fetch('http://localhost:5000/data', request)
+    .then(data => {
+      console.log("succes", data);
+    })
+    .then(res => {
+      return res.json()
+    })
+  
+    .catch(err => {
+      console.log('err: ', err)
+    })
+  }
+  
+
   return (
     <div>
-      <Table columns={columns} dataSource={data} className="table" />
+      <Table columns={columns} dataSource={fakeData} className="table" />
       <div className="navigation">
         <Button
           type="primary"
@@ -59,6 +88,9 @@ export default function MyTable() {
           size="normal"
           onClick={() => handleGet()}
         >
+          {localData()}
+          {console.log(local)}
+
           Get Task
         </Button>
         <Button type="primary" onClick={() => handlePost()}>
