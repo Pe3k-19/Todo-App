@@ -55,25 +55,16 @@ export default function MyTable() {
     let request = {
       headers: {
         'Content-Type': 'application/json'
-        // Authorization: 'Bearer ' + GlobalStore.token //Zatial do storu token...
       },
-      // body: JSON.stringify(data),
-      credentials: 'include',
       method: 'GET',
-      mode: 'no-cors',
-      // body: JSON.stringify(req)
     }
   
     fetch('http://localhost:5000/data', request)
-    .then(data => {
-      console.log("succes", data);
-    })
-    .then(res => {
-      return res.json()
-    })
+    .then(res => res.json()
+    ).then(data => console.log("data",data))
   
     .catch(err => {
-      console.log('err: ', err)
+      console.log('error: ', err)
     })
   }
   

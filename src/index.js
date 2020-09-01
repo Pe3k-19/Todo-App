@@ -4,14 +4,6 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-// const express = require('express');
-// const app = express();
-
-// app.get('/', (req, res) => {
-//     res.send('ahoj');
-// });
-
-// app.listen(3000, () => console.log('Listening on port 3000...'));
 
 ReactDOM.render(<App/>, document.getElementById("root"))
 

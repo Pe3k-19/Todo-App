@@ -1,17 +1,18 @@
 const express = require("express");
 const app = express();
+const mariadb = require('mariadb');
 app.use(express.json());
 const Joi = require('joi');
 require('dotenv').config();
-const port = process.env.PORT || 3000;
-const mariadb = require('mariadb');
+
 
 const pool = mariadb.createPool({
-    host: '127.0.0.1', 
-    user:'root', 
-    password: '12345',
-    database: 'tasks'
+    host: process.env.HOST, 
+    user: process.env.USER, 
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
 });
+
 
 const addNewTask = (text) => {
     pool.getConnection()
@@ -92,13 +93,13 @@ app.get('/data', (req, res) => {
     });
 });
 
-app.get('/data/:id', (req, res) => {
-    return pool.query('SELECT * FROM ulohy')
-        .then(result => {
-            const task = result.find(task => task.id === parseInt(req.params.id));
-            res.json(task);
-        });
-})
+// app.get('/data/:id', (req, res) => {
+//     return pool.query('SELECT * FROM ulohy')
+//         .then(result => {
+//             const task = result.find(task => task.id === parseInt(req.params.id));
+//             res.json(task);
+//         });
+// })
     // const task = localDatabase.find(task => task.id === parseInt(req.params.id));
     // if (!task) return res.status(404).send('Uloha sa nenasla')
     // res.send(task);
@@ -201,5 +202,5 @@ function validateTask(task) {
 
 
 // console.log(localDatabase)
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}...`));
 
