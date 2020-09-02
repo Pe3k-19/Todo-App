@@ -1,14 +1,14 @@
 .enviroment {
-  background: black;
-  padding-top: 100px;
-  height: 100vh;
+  background: #d6cbcb;
+  padding: 100px 0px 100px 0px;
+  height: auto;
 }
 
 .container {
   width: 80%;
   margin-left: 10%;
   padding-top: 20px;
-  border: 2px solid gray;
+  border: 2px solid white;
   border-radius: 10px;
   background: #fbfcd4;
 }

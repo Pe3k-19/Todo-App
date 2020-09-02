@@ -1,34 +1,64 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import "./style/App.css";
 import MyTable from "./table"
 
 function App() {
-  // const aaa = () => {
-    
+
+  //              HOOKS
+
+  const [rows, setRows] = useState("");
+
+let tableData = [];
+
+  const handleLocalData = () => {
+    let request = {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'GET',
+    }
+  
+    fetch('http://localhost:5000/data', request)
+    .then(res => res.json())
+    .then(data => setRows(data))
+  
+    .catch(err => {
+      console.log('error: ', err)
+    })
+  }
+
+useEffect(() => {
+  handleLocalData();
+}, []);
   
 
-    // fetch('http://localhost:5000/tasks', {
-      // method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      // mode: 'no-cors', // no-cors, *cors, same-origin
-      // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      // headers: {
-        // 'Content-Type': "application/json" //'text/plain'
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      // },
-    // })
-    // .then(response => response.json())
-    // .then(data => console.log(data)).catch((err) => console.log("err:", err))
-// }
+
+
 
   return (
     <div className="enviroment">
       <div className="container">
         <header>
           <h1>Todo App</h1>
-  {/* <p>{aaa()}</p> */}
         </header>
         <div>
-          <MyTable />
+          <MyTable tableData={rows}
+          onChangeLocalData = {handleLocalData}/>
+          {/* <table>
+            <thead>
+            <tr>
+              <th>Task name</th>
+              <th>Function</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>{rows}</th>
+              </tr>
+              </tbody>
+          </table>
+          <button onClick= {() => localData()}>Get task</button> */}
+          {/* {console.log(rows)} */}
         </div>
       </div>
     </div>

@@ -22,8 +22,7 @@ const addNewTask = (text) => {
                     conn.query(`INSERT INTO ulohy (NAME) VALUE ("${text}")`
                     );
                     // console.log(text)  // kontrola v konzole
-                })
-       
+                })     
 }
 // const getTask = () => {
 //     pool.getConnection()
@@ -92,7 +91,7 @@ app.get('/data', (req, res) => {
         res.json(result);
     });
 });
-
+ 
 // app.get('/data/:id', (req, res) => {
 //     return pool.query('SELECT * FROM ulohy')
 //         .then(result => {

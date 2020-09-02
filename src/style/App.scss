@@ -1,12 +1,12 @@
 // Variables
 $color-main: rgb(218, 185, 4);
-$color-secondary: black;
+$color-secondary: rgb(214, 203, 203);
 $color-box: #fbfcd4;
 
 .enviroment {
   background: $color-secondary;
-  padding-top: 100px;
-  height: 100vh;
+  padding: 100px 0px 100px 0px;
+  height: auto;
 }
 .container {
   width: 80%;
