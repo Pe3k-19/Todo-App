@@ -91,6 +91,11 @@ app.get('/data', (req, res) => {
         res.json(result);
     });
 });
+
+app.get('/', (req, res) => {
+    res.send('Hello');
+  });
+
  
 // app.get('/data/:id', (req, res) => {
 //     return pool.query('SELECT * FROM ulohy')
@@ -117,9 +122,6 @@ app.get('/data', (req, res) => {
 //     // res.json(getTask())
 // });
 
-// app.get('/api/hello', (req, res) => {
-//     res.send({ express: 'Hello From Express' });
-//   });
 
 // app.get('/tasks/:id', (req, res) => {
 //     const task = localDatabase.find(task => task.id === parseInt(req.params.id));
@@ -138,18 +140,18 @@ app.get('/data', (req, res) => {
 
 
 
-// app.post('/tasks', (req, res) => {
-//     const { error } = validateTask(req.body);
-//     if (error) return res.status(400).send(error.details[0].message);
+app.post('/', (req, res) => {
+    // const { error } = validateTask(req.body);
+    // if (error) return res.status(400).send(error.details[0].message);
 
-//     const task = {
-//         id: localDatabase.length + 1,
-//         name: req.body.name
-//     };
+    const task = {
+        // id: localDatabase.length + 1,
+        name: req.body.newData
+    };
 
-//     localDatabase.push(task);
-//     res.send(task);
-// });
+    localDatabase.push(task);
+    res.send(task);
+});
 
 
 
@@ -158,17 +160,17 @@ app.get('/data', (req, res) => {
 // updateTask(5, "update");
 
 
-// app.put('/tasks/:id', (req, res) => {
-//     const task = localDatabase.find(task => task.id === parseInt(req.params.id));
-//     if (!task) return res.status(404).send('Uloha sa nenasla')
+app.put('/put/:id', (req, res) => {
+    const task = localDatabase.find(task => task.id === parseInt(req.params.id));
+    if (!task) return res.status(404).send('Uloha sa nenasla')
 
 
-//     const { error } = validateTask(req.body);
-//     if (error) return res.status(400).send(error.details[0].message);
+    const { error } = validateTask(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
 
-//     task.name = req.body.name;
-//     res.send(task);
-// });
+    task.name = req.body.name;
+    res.send(task);
+});
 
 // ------------------------  DELETE  ----------------------------
 
