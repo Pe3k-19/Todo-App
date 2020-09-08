@@ -1,9 +1,12 @@
 const express = require("express");
 const app = express();
 const mariadb = require('mariadb');
+const bodyParser = require('body-parser')
 app.use(express.json());
 const Joi = require('joi');
 require('dotenv').config();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 
 const pool = mariadb.createPool({
@@ -50,10 +53,10 @@ const deleteTask = (id) => {
 }
 
 
-app.use('/time/:id', function (req, res, next) {
-    console.log(req.method);
-next();
-})
+// app.use('/time/:id', function (req, res, next) {
+//     console.log(req.method);
+// next();
+// })
 
 // pool.getConnection()
 // .then( conn => {
@@ -135,22 +138,31 @@ app.get('/', (req, res) => {
 
 // addNewTask('Nova Uloha');
 
-
-
-
-
-
 app.post('/', (req, res) => {
+
+    // console.log(req)
+    // res.header("Access-Control-Allow-Origin", "*");
     // const { error } = validateTask(req.body);
     // if (error) return res.status(400).send(error.details[0].message);
 
-    const task = {
-        // id: localDatabase.length + 1,
-        name: req.body.newData
-    };
+    // const task = {
+    //     key: null,
+    //     title: req.body.newData.title
+    // };
+    app.use(bodyParser.json())
+    pool.getConnection()
+    .then(conn => {
+  
+        // conn.query("SELECT * FROM ulohy")
+        //     .then((req, res) => {
 
-    localDatabase.push(task);
-    res.send(task);
+
+                conn.query(`INSERT INTO ulohy (title) VALUE ("${req.body}")`
+                );
+                // console.log(text)  // kontrola v konzole
+            })     
+    // localDatabase.push(task);
+    res.send(req.body)
 });
 
 
@@ -160,17 +172,17 @@ app.post('/', (req, res) => {
 // updateTask(5, "update");
 
 
-app.put('/put/:id', (req, res) => {
-    const task = localDatabase.find(task => task.id === parseInt(req.params.id));
-    if (!task) return res.status(404).send('Uloha sa nenasla')
+// app.put('/put/:id', (req, res) => {
+//     const task = localDatabase.find(task => task.id === parseInt(req.params.id));
+//     if (!task) return res.status(404).send('Uloha sa nenasla')
 
 
-    const { error } = validateTask(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+//     const { error } = validateTask(req.body);
+//     if (error) return res.status(400).send(error.details[0].message);
 
-    task.name = req.body.name;
-    res.send(task);
-});
+//     task.name = req.body.name;
+//     res.send(task);
+// });
 
 // ------------------------  DELETE  ----------------------------
 

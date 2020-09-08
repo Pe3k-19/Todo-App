@@ -7,7 +7,7 @@ function App() {
   //              HOOKS
 
   const [rows, setRows] = useState("");
-  const [newData, setNewData] = useState('nove data');
+  const [newData, setNewData] = useState("");
 
 
   useEffect(() => {
@@ -15,39 +15,54 @@ function App() {
     
 
   //   ---------------------------   PUT    --------------------------
+// console.log("original", typeof newData)
+// // newData.toString();
+// // console.log("tostring", typeof newData)
+// // JSON.stringify(newData)
+// // console.log("stringify", typeof newData)
+// JSON.parse(newData)
+// console.log("parse", typeof newData)
 
-
+const handleChangeForm = (event) => {
+  setNewData(event.target.value);
+}
 
 const handleSubmitData = () => {
-//   let request = {
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     method: 'POST',
-//   }
+  let request = {
+    headers: {
+      "Content-Type": "application/json",
+      'Accept': 'application/json',
+      "mods": 'cors'
+    },
+    method: 'POST',
+  }
 
-//   fetch("https://localhost:5000", request,
-// {body: JSON.stringify(data)})
-// .then(res => res.json())
-// .then(data => {console.log("Success:", data);
-// })
-// .catch((error) => {
-//   console.error("Fetch error:",error);
-// })
-fetch('http://localhost:5000', {
-  method: 'POST', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.parse(newData),
+  fetch("http://localhost:5000/", request,
+{body: newData})
+.then(res => {
+  if(res.ok) {return res.json()}
+  else {console.log("Res error")}
 })
-.then(response => response.json())
-.then(data => {
-  console.log('Success:', data);
+.then(json => {console.log("json: ", json)})
+.then(data => {console.log("Success:", data);
 })
 .catch((error) => {
-  console.error('Error:', error);
-});
+  console.error("Fetch error:",error);
+})
+// fetch('http://localhost:5000', {
+//   method: 'POST', // or 'PUT'
+//   headers: {
+//     'Content-Type': 'application/json',
+//   },
+//   body: JSON.parse(rows),
+// })
+// .then(response => response.json())
+// .then(data => {
+//   console.log('Success:', data);
+// })
+// .catch((error) => {
+//   console.error('Fetch Error:', error);
+// });
 }
 
 //   ---------------------------   GET    --------------------------
@@ -69,6 +84,7 @@ const handleLocalData = () => {
   .catch(err => {
     console.log('error: ', err)
   });
+  // console.log(rows)
 }
 
   return (
@@ -79,25 +95,12 @@ const handleLocalData = () => {
         </header>
         <div>
           <MyTable tableData={rows}
+          newData={newData}
+          onChangeForm = {handleChangeForm}
           onChangeLocalData = {handleLocalData}
           onSubmitData = {handleSubmitData} />
-          <button onClick={handleLocalData}>dsfsdf</button>
-          {/* <table>
-            <thead>
-            <tr>
-              <th>Task name</th>
-              <th>Function</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>{rows}</th>
-              </tr>
-              </tbody>
-          </table>
-          <button onClick= {() => localData()}>Get task</button> */}
-          {/* {console.log(rows)} */}
         </div>
+        {/* {console.log(typeof newData)} */}
       </div>
     </div>
   );

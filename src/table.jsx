@@ -49,9 +49,6 @@ export default function MyTable(props) {
   function handlePost() {
     return console.log("post");
   }
-  function handlePut() {
-    return console.log("put");
-  }
 
   return (
     <div>
@@ -79,9 +76,9 @@ export default function MyTable(props) {
           onFinish={handlePost}
         >
           <Form.Item label="Task" name="task">
-            <Input name="name" id="dataName" value="hi" />
+            <Input name="name" id="dataName" value={props.newData} onChange={(event) => props.onChangeForm(event)} />
           </Form.Item>
-          <Button type="primary">
+          <Button type="primary" onClick={() => props.onSubmitData()}>
             Search Task
           </Button>
         </Form>
