@@ -7,66 +7,41 @@ function App() {
   //              HOOKS
 
   const [rows, setRows] = useState("");
-  const [newData, setNewData] = useState("");
+  const [newData, setNewData] = useState('');
 
 
   useEffect(() => {
     handleLocalData()}, []);
-    
-
-  //   ---------------------------   PUT    --------------------------
-// console.log("original", typeof newData)
-// // newData.toString();
-// // console.log("tostring", typeof newData)
-// // JSON.stringify(newData)
-// // console.log("stringify", typeof newData)
-// JSON.parse(newData)
-// console.log("parse", typeof newData)
 
 const handleChangeForm = (event) => {
   setNewData(event.target.value);
 }
 
-const handleSubmitData = () => {
-  let request = {
-    headers: {
-      "Content-Type": "application/json",
-      'Accept': 'application/json',
-      "mods": 'cors'
-    },
-    method: 'POST',
-  }
+//  ----------------------------------   POST    ----------------------------
 
-  fetch("http://localhost:5000/", request,
-{body: newData})
-.then(res => {
-  if(res.ok) {return res.json()}
-  else {console.log("Res error")}
+const handleSubmitData = () => {
+  async function postData(url = '', data = {}) {
+    const response = await fetch(url, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    return response.json();
+  }
+  
+  postData('http://localhost:5000/',  {newData})
+  .then(data => {console.log(data)
 })
-.then(json => {console.log("json: ", json)})
-.then(data => {console.log("Success:", data);
-})
-.catch((error) => {
-  console.error("Fetch error:",error);
-})
-// fetch('http://localhost:5000', {
-//   method: 'POST', // or 'PUT'
-//   headers: {
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.parse(rows),
-// })
-// .then(response => response.json())
-// .then(data => {
-//   console.log('Success:', data);
-// })
-// .catch((error) => {
-//   console.error('Fetch Error:', error);
-// });
+
+  .catch((error) => {
+          console.error("Fetch error:",error);
+        })
 }
 
 //   ---------------------------   GET    --------------------------
-
 
 const handleLocalData = () => {
   let request = {

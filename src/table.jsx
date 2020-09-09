@@ -65,12 +65,12 @@ export default function MyTable(props) {
         {/* <Button type="primary" onClick={() => handlePost()}>
           Post Task
         </Button> */}
-        <Button id="putBtn" onClick={() => props.onSubmitData()}>
-          Put Task
+        <Button id="putBtn" onClick={() => console.log("update")}>
+          Update Task
         </Button>
 
         <Form
-          action="https://www.foo.com"
+          action="https://localhost:5000/"
           method="POST"
           name="basic"
           onFinish={handlePost}
@@ -79,7 +79,7 @@ export default function MyTable(props) {
             <Input name="name" id="dataName" value={props.newData} onChange={(event) => props.onChangeForm(event)} />
           </Form.Item>
           <Button type="primary" onClick={() => props.onSubmitData()}>
-            Search Task
+           Add Task
           </Button>
         </Form>
 

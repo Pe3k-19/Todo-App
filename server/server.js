@@ -17,74 +17,20 @@ const pool = mariadb.createPool({
 });
 
 
-const addNewTask = (text) => {
-    pool.getConnection()
-        .then(conn => {
-            // conn.query("SELECT * FROM ulohy")
-            //     .then((req, res) => {
-                    conn.query(`INSERT INTO ulohy (NAME) VALUE ("${text}")`
-                    );
-                    // console.log(text)  // kontrola v konzole
-                })     
-}
-// const getTask = () => {
+// const updateTask = (id, text) => {
 //     pool.getConnection()
 //         .then(conn => {
-//             conn.query("SELECT * FROM ulohy")
-//             .then(res => {
-//                 return (res)
-//             })
+//         conn.query(`UPDATE ulohy SET name = '${text}' WHERE id = ${id}`)
 //         })
 // }
 
+// const deleteTask = (id) => {
+//     pool.getConnection()
+//     .then(conn => {
+//         conn.query(`DELETE FROM ulohy WHERE id = ${id}`)
+//     })
+// }
 
-const updateTask = (id, text) => {
-    pool.getConnection()
-        .then(conn => {
-        conn.query(`UPDATE ulohy SET name = '${text}' WHERE id = ${id}`)
-        })
-}
-
-const deleteTask = (id) => {
-    pool.getConnection()
-    .then(conn => {
-        conn.query(`DELETE FROM ulohy WHERE id = ${id}`)
-    })
-}
-
-
-// app.use('/time/:id', function (req, res, next) {
-//     console.log(req.method);
-// next();
-// })
-
-// pool.getConnection()
-// .then( conn => {
-//     conn.query('SELECT * from ulohy', function (err, rows, fields) {
-//         if (err) throw err
-      
-//         console.log('The solution is: ', rows)
-//       })
-      
-//       conn.end()
-// })
-
-
-
-
-// app.get('/', function (req, res) {
-//     res.send(res);
-// })
-//     app.route('/book')
-//   .get(function (req, res) {
-//     res.send('Get a random book')
-//   })
-//   .post(function (req, res) {
-//     res.send('Add a book')
-//   })
-//   .put(function (req, res) {
-//     res.send('Update the book')
-//   })
 
 // --------------------     GET   --------------------------
 
@@ -136,33 +82,18 @@ app.get('/', (req, res) => {
 
 // --------------------     POST   --------------------------
 
-// addNewTask('Nova Uloha');
-
+app.use(bodyParser.json())
 app.post('/', (req, res) => {
-
-    // console.log(req)
-    // res.header("Access-Control-Allow-Origin", "*");
-    // const { error } = validateTask(req.body);
-    // if (error) return res.status(400).send(error.details[0].message);
-
-    // const task = {
-    //     key: null,
-    //     title: req.body.newData.title
-    // };
-    app.use(bodyParser.json())
+    
     pool.getConnection()
     .then(conn => {
-  
-        // conn.query("SELECT * FROM ulohy")
-        //     .then((req, res) => {
+        if(req.body.newData === "") {console.log("Prazdne pole")
+    } else {
 
-
-                conn.query(`INSERT INTO ulohy (title) VALUE ("${req.body}")`
-                );
-                // console.log(text)  // kontrola v konzole
+                conn.query(`INSERT INTO ulohy (title) VALUE ("${req.body.newData}")`
+                )}
             })     
-    // localDatabase.push(task);
-    res.send(req.body)
+    // res.send(req.body)
 });
 
 
