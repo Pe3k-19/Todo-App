@@ -10,16 +10,43 @@ function App() {
   const [newData, setNewData] = useState('');
 
 
-  useEffect(() => {
-    handleLocalData()}, []);
+useEffect(() => {
+  handleGetData()}, []);
 
 const handleChangeForm = (event) => {
   setNewData(event.target.value);
 }
 
+//  ----------------------------------   DELETE   --------------------------------
+
+const handleDeleteData = () => {
+  // event.preventDefault();
+// console.log(rows.map(x => x))
+
+  async function DeleteData(url = '', data = {}) {
+    const response = await fetch(url, {
+      method: 'DELETE',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    });
+    return response.json();
+  }
+  
+DeleteData(`http://localhost:5000/delete/:title`, {newData})
+  .then(data => {console.log(data)
+})
+
+  .catch((error) => {
+          console.error("Fetch error:",error);
+        })
+}
+
 //  ----------------------------------   POST    ----------------------------
 
-const handleSubmitData = () => {
+const handlePostData = () => {
   async function postData(url = '', data = {}) {
     const response = await fetch(url, {
       method: 'POST',
@@ -41,9 +68,9 @@ const handleSubmitData = () => {
         })
 }
 
-//   ---------------------------   GET    --------------------------
+//   ----------------------------------   GET    -----------------------------
 
-const handleLocalData = () => {
+const handleGetData = () => {
   let request = {
     headers: {
       'Content-Type': 'application/json'
@@ -72,8 +99,9 @@ const handleLocalData = () => {
           <MyTable tableData={rows}
           newData={newData}
           onChangeForm = {handleChangeForm}
-          onChangeLocalData = {handleLocalData}
-          onSubmitData = {handleSubmitData} />
+          onChangeGetData = {handleGetData}
+          onChangePostData = {handlePostData}
+          onChangeDeleteData = {handleDeleteData} />
         </div>
         {/* {console.log(typeof newData)} */}
       </div>

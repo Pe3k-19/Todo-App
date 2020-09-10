@@ -92,8 +92,7 @@ app.post('/', (req, res) => {
 
                 conn.query(`INSERT INTO ulohy (title) VALUE ("${req.body.newData}")`
                 )}
-            })     
-    // res.send(req.body)
+            })  
 });
 
 
@@ -117,20 +116,15 @@ app.post('/', (req, res) => {
 
 // ------------------------  DELETE  ----------------------------
 
-
-// deleteTask(1);
-
-
-
-// app.delete('/data/:id', (req, res) => {
-//     const task = localDatabase.find(task => task.id === parseInt(req.params.id));
-//     if (!task) return res.status(404).send('Uloha sa nenasla');
-
-//     const index = localDatabase.indexOf(task);
-//     localDatabase.splice(index, 1);
-
-//     res.send(task);
-// });
+app.delete('/delete/:title', (req, res) => {
+    pool.getConnection()
+        .then(conn => {
+            if(req.body.newData === "") {console.log("Prazdne pole")
+    } else {
+            conn.query(`DELETE FROM ulohy WHERE title = "${req.body.newData}"`)
+        }
+    })
+});
 
 //  -----------------------  VALIDACIA  ------------------------
 
