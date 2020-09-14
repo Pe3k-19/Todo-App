@@ -15,6 +15,7 @@ function App() {
           <MyTable />
         </div>
       </div>
+      {console.log('f')}
     </div>
   );
 }
